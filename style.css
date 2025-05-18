@@ -1,0 +1,891 @@
+/* Base styles */
+:root {
+    --transition-duration: 0.3s;
+}
+
+/* Loading Animation */
+.loading-spinner {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-spinner:before,
+.loading-spinner:after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    animation: pulse 1.5s linear infinite;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.loading-spinner:before {
+    width: 100%;
+    height: 100%;
+    background-color: #6366f1;
+    animation-delay: 0s;
+}
+
+.loading-spinner:after {
+    width: 80%;
+    height: 80%;
+    background-color: #818cf8;
+    animation-delay: 0.5s;
+}
+
+.dark .loading-spinner:before {
+    background-color: #818cf8;
+}
+
+.dark .loading-spinner:after {
+    background-color: #6366f1;
+}
+
+.loading-text {
+    font-size: 1.5rem;
+    color: #4b5563;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    text-align: center;
+    letter-spacing: 0.5px;
+    position: absolute;
+    top: calc(50% + 60px);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.dark .loading-text {
+    color: #d1d5db;
+}
+
+@keyframes pulse {
+    0% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0.5;
+    }
+}
+
+/* Loading screen */
+#loadingScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
+
+.dark #loadingScreen {
+    background: rgba(17, 24, 39, 0.95);
+}
+
+/* Reset All Button */
+#resetAllBtn {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+#resetAllBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px -1px rgba(0, 0, 0, 0.1), 0 4px 6px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Dark mode styles */
+.dark {
+    color-scheme: dark;
+}
+
+.dark body {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+/* Add transition to all elements */
+* {
+    transition: background-color var(--transition-duration) ease,
+                border-color var(--transition-duration) ease,
+                color var(--transition-duration) ease,
+                box-shadow var(--transition-duration) ease;
+}
+
+/* Theme transitions */
+html {
+    transition: background-color var(--transition-duration) ease;
+}
+
+html.light {
+    background-color: #ffffff;
+}
+
+html.dark {
+    background-color: #1a1a1a;
+}
+
+body {
+    transition: background-color var(--transition-duration) ease,
+                color var(--transition-duration) ease;
+}
+
+/* Flashcard styles */
+.flashcard {
+    perspective: 1000px;
+    width: 100%;
+    max-width: 600px;
+    height: 300px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+}
+
+.flashcard.flipped .flashcard-inner {
+    transform: rotateY(180deg);
+}
+
+.flashcard-front,
+.flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    border-radius: 1rem;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+}
+
+.flashcard-back {
+    transform: rotateY(180deg);
+}
+
+/* Answer highlight effect */
+.flashcard-back .answer-text {
+    background: linear-gradient(120deg, #f0f9ff 0%, #e0f2fe 100%);
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.dark .flashcard-back .answer-text {
+    background: linear-gradient(120deg, #1e3a8a 0%, #1e40af 100%);
+    color: #ffffff;
+}
+
+.difficulty-btn {
+    transition: all 0.2s ease;
+    transform: scale(1);
+}
+
+.difficulty-btn:hover {
+    transform: scale(1.05);
+}
+
+.difficulty-btn:active {
+    transform: scale(0.95);
+}
+
+.progress-bar {
+    transition: width 0.3s ease;
+}
+
+/* Modal animations */
+#cardModal,
+#analysisModal {
+    transition: opacity 0.3s ease;
+}
+
+#cardModal.hidden,
+#analysisModal.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#cardModal > div,
+#analysisModal > div {
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+#cardModal.hidden > div,
+#analysisModal.hidden > div {
+    transform: translateY(-20px);
+}
+
+/* Search and filter inputs */
+#searchInput,
+#categoryFilter {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#searchInput:focus,
+#categoryFilter:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Stats cards hover effect */
+.bg-indigo-50,
+.bg-green-50,
+.bg-blue-50,
+.bg-purple-50 {
+    transition: transform 0.2s ease;
+}
+
+.bg-indigo-50:hover,
+.bg-green-50:hover,
+.bg-blue-50:hover,
+.bg-purple-50:hover {
+    transform: translateY(-2px);
+}
+
+/* Star animation */
+.fa-star {
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.fa-star.text-yellow-400 {
+    transform: scale(1.1);
+}
+
+/* Dark mode specific styles */
+.dark .flashcard-front {
+    background-color: #2d2d2d;
+    border-color: #4b5563;
+    color: #e5e7eb;
+}
+
+.dark .flashcard-back {
+    background-color: #2d2d2d;
+    border-color: #4b5563;
+    color: #e5e7eb;
+}
+
+.dark .bg-white {
+    background-color: #2d2d2d;
+}
+
+.dark .text-gray-800 {
+    color: #e5e7eb;
+}
+
+.dark .text-gray-600 {
+    color: #9ca3af;
+}
+
+.dark .text-gray-400 {
+    color: #9ca3af;
+}
+
+.dark .border-gray-200 {
+    border-color: #4b5563;
+}
+
+.dark .bg-gray-100 {
+    background-color: #374151;
+}
+
+.dark .bg-gray-200 {
+    background-color: #4b5563;
+}
+
+.dark .bg-gray-700 {
+    background-color: #374151;
+}
+
+.dark .bg-gray-800 {
+    background-color: #1f2937;
+}
+
+.dark .bg-gray-900 {
+    background-color: #111827;
+}
+
+.dark .bg-indigo-50 {
+    background-color: #312e81;
+}
+
+.dark .bg-green-50 {
+    background-color: #064e3b;
+}
+
+.dark .bg-blue-50 {
+    background-color: #1e3a8a;
+}
+
+.dark .bg-purple-50 {
+    background-color: #581c87;
+}
+
+.dark .bg-red-50 {
+    background-color: #7f1d1d;
+}
+
+.dark .fa-star.text-gray-300 {
+    color: #4b5563;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    /* Adjustments for medium screens (tablets and smaller desktops) */
+    #mainContent {
+        padding: 1rem; /* Adjust padding */
+    }
+}
+
+@media (max-width: 640px) {
+    /* Adjustments for small screens (phones) */
+    .container {
+        max-width: 100%; /* Allow container to take full width */
+        padding-left: 1rem;
+        padding-right: 1rem;
+        margin: 0 auto; /* Center the container */
+    }
+    .flex-col.sm\:flex-row {
+        flex-direction: column; /* Stack elements vertically */
+    }
+    .card-management-section .flex.flex-col.sm\:flex-row > .flex.flex-col.sm\:flex-row.items-center.gap-2.w-full {
+        flex-direction: column; /* Stack search and filter vertically */
+        width: 100%; /* Ensure it takes full width */
+    }
+    .card-management-section .flex.flex-col.sm\:flex-row > .flex.items-center.gap-2.w-full {
+        flex-direction: row; /* Keep buttons side-by-side */
+        width: 100%; /* Ensure buttons container takes full width */
+        justify-content: space-between; /* Space out buttons */
+    }
+    .grid.sm\:grid-cols-3,
+    .grid.sm\:grid-cols-2 {
+        grid-template-columns: 1fr; /* Stack grid items */
+        gap: 1rem; /* Adjust gap for stacked items */
+    }
+    .p-4.sm\:p-6 {
+        padding: 1rem; /* Adjust padding */
+    }
+    .text-3xl.sm\:text-4xl {
+        font-size: 1.875rem; /* Adjust font size */
+    }
+    .flashcard {
+        height: 250px;
+    }
+    
+    .difficulty-btn {
+        padding: 0.5rem 1rem;
+    }
+    
+    .grid-cols-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .flashcard-front,
+    .flashcard-back {
+        padding: 1rem;
+    }
+
+    #searchInput,
+    #categoryFilter {
+        width: 100%; /* Make search input and filter take full width */
+    }
+
+    /* Adjust button width within their container on small screens */
+    #addCardBtn,
+    #editCardBtn {
+        width: 48%; /* Make buttons take roughly half width */
+        min-width: 0; /* Remove minimum width constraint */
+    }
+}
+
+/* Add more specific responsive rules if needed */
+/* Example for a different breakpoint */
+@media (min-width: 641px) and (max-width: 768px) {
+    /* Styles for screens between 641px and 768px */
+     .container {
+         max-width: 600px; /* Adjust max-width for this range */
+         margin: 0 auto; /* Center */
+         padding: 0 1rem; /* Add padding */
+     }
+    /* Adjustments for specific sections or elements */
+    /* .card-management-section .grid { grid-template-columns: repeat(2, 1fr); } */
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Styles for screens between 769px and 1024px */
+     .container {
+         max-width: 900px; /* Adjust max-width */
+         margin: 0 auto; /* Center */
+         padding: 0 1rem; /* Add padding */
+     }
+    /* Adjustments for specific sections or elements */
+}
+
+/* General styles for container */
+.container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Toggle switch styles */
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #6366f1;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #6366f1;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(16px);
+  -ms-transform: translateX(16px);
+  transform: translateX(16px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 24px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* Dark mode specific toggle styles */
+.dark input:checked + .slider {
+    background-color: #818cf8;
+}
+
+.dark input:focus + .slider {
+    box-shadow: 0 0 1px #818cf8;
+}
+
+/* Streak days styling */
+.streak-day {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    background-color: #f3f4f6;
+    color: #6b7280;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.streak-day:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dark .streak-day {
+    background-color: #374151;
+    color: #9ca3af;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.streak-day.active {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: #ffffff;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(251, 191, 36, 0.3);
+}
+
+.streak-day.completed {
+    background: linear-gradient(135deg, #34d399 0%, #059669 100%);
+    color: #ffffff;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(52, 211, 153, 0.3);
+}
+
+.dark .streak-day.completed {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    box-shadow: 0 4px 8px rgba(5, 150, 105, 0.3);
+}
+
+.streak-day.today {
+    border: 2px solid #fbbf24;
+}
+
+.dark .streak-day.today {
+    border-color: #d97706;
+}
+
+/* Streak container styling */
+.streak-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+.dark .streak-container {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* Add Card Button */
+#addCardBtn {
+    width: 100px !important;
+    min-width: 100px;
+}
+
+/* Smooth Scroll and Animations */
+html {
+    scroll-behavior: smooth;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+.animate-slide-up {
+    animation: slideUp 0.5s ease-out;
+}
+
+.animate-slide-down {
+    animation: slideDown 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Scroll Animations */
+.scroll-animate,
+.scroll-animate-left,
+.scroll-animate-right,
+.scroll-animate-scale {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 4s ease-out;
+}
+
+.scroll-animate:not(.active) {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.scroll-animate-left:not(.active) {
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+.scroll-animate-right:not(.active) {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+.scroll-animate-scale:not(.active) {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+/* Sidebar */
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%; /* Hide off-screen initially */
+    height: 100%;
+    z-index: 50;
+    width: 16rem; /* Default width for expanded state on larger screens */
+    transition: left 0.5s ease-in-out, width 0.5s ease-in-out;
+}
+
+#sidebar.open {
+    left: 0; /* Slide in when open on mobile */
+}
+
+#sidebar.collapsed {
+    width: 5rem; /* Collapsed width on larger screens */
+}
+
+#mainContent {
+    margin-left: 0; /* No margin by default */
+    padding-top: 2.5rem; /* Adjust padding-top as needed */
+    width: 100%;
+    box-sizing: border-box;
+    transition: margin-left 0.3s ease;
+}
+
+#mainContent.shifted {
+    margin-left: 16rem; /* Shifted margin when sidebar is expanded on larger screens */
+}
+
+#sidebar.collapsed + #mainContent.shifted {
+    margin-left: 5rem; /* Shifted margin when sidebar is collapsed on larger screens */
+}
+
+#sidebar.collapsed #sidebarToggle i {
+    transform: rotate(180deg); /* Rotate chevron on collapse */
+}
+
+#sidebar.collapsed .text-lg.font-medium,
+#sidebar.collapsed h2 {
+    display: none;
+}
+
+#sidebar.collapsed nav a {
+    justify-content: center; /* Center icons when collapsed */
+}
+
+#sidebar.collapsed .p-6 {
+    justify-content: center;
+}
+
+#sidebar.collapsed .p-4 .space-x-3 {
+     flex-direction: column; /* Stack bottom icons vertically */
+     align-items: center;
+     appearance: 0; 
+     appearance: 0.5rem; 
+}
+
+#sidebar.collapsed .p-4 .space-x-3 > button {
+    width: auto; /* Allow buttons to shrink */
+    justify-content: center;
+}
+
+#sidebar.collapsed #themeToggleSidebar .flex.items-center.space-x-3 {
+    justify-content: center;
+}
+
+#sidebar.collapsed #darkModeToggleSidebar, #sidebar.collapsed label[for="darkModeToggleSidebar"] {
+    display: none;
+}
+
+#sidebar.collapsed #sidebarToggle i.chevron-icon {
+    display: none;
+}
+
+#sidebar.collapsed #sidebarToggle i.bars-icon {
+    display: inline-block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #sidebar {
+        width: 80%; /* Cover 80% of the screen on mobile */
+        left: -80%; /* Hide off-screen by default */
+        transition: left 0.5s ease-in-out;
+    }
+
+    #sidebar.open {
+        left: 0; /* Slide in when open */
+    }
+
+    #mainContent,
+    #mainContent.shifted,
+    #sidebar.collapsed + #mainContent.shifted {
+        margin-left: 0; /* No margin on mobile */
+    }
+
+    /* Optional: Add an overlay when sidebar is open on small screens */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 40;
+        display: none;
+    }
+
+    body.sidebar-open::before { /* Use a class on body to control overlay */
+        display: block;
+    }
+
+    /* Hide the default sidebar toggle button on mobile */
+    #sidebarToggle {
+        display: none;
+    }
+
+    /* Sidebar toggle icon on mobile (controlled by new button) */
+    #mobileSidebarToggle {
+        display: inline-block; /* Show new button on mobile */
+    }
+
+    /* The icon within the new button will be handled by its own display state */
+    #mobileSidebarToggle i.chevron-icon,
+    #mobileSidebarToggle i.bars-icon {
+        display: inline-block; /* Ensure icons within the new button are visible */
+    }
+
+    /* Sidebar toggle icon within the sidebar itself - keep for desktop collapsed view logic */
+    #sidebar #sidebarToggle i.chevron-icon {
+        display: none; /* Hide chevron by default on mobile */
+    }
+
+    #sidebar #sidebarToggle i.bars-icon {
+        display: inline-block; /* Show bars (hamburger) by default on mobile */
+    }
+
+    #sidebar.open #sidebarToggle i.chevron-icon {
+        display: inline-block; /* Show chevron when sidebar is open */
+    }
+
+    #sidebar.open #sidebarToggle i.bars-icon {
+        display: none; /* Hide bars (hamburger) when sidebar is open */
+    }
+
+    /* Sidebar Close Button Positioning (Mobile) */
+    #sidebarCloseBtn {
+        display: block; /* Show close button on mobile */
+    }
+}
+
+@media (min-width: 769px) {
+     /* Styles for screens larger than 768px (laptops/desktops) */
+     #sidebar {
+         position: fixed; /* Keep sidebar fixed */
+         top: 0;
+         left: 0; /* Always visible on large screens */
+         height: 100%;
+         width: 16rem; /* Default expanded width */
+         transition: width 0.5s ease-in-out;
+     }
+
+     #sidebar.collapsed {
+         width: 5rem; /* Collapsed width */
+     }
+
+     #mainContent {
+         margin-left: 16rem; /* Shift content when sidebar is expanded */
+         padding-top: 2.5rem;
+         width: auto; /* Allow main content to take remaining width */
+     }
+
+     #mainContent.shifted {
+         margin-left: 5rem; /* Shift content when sidebar is collapsed */
+     }
+
+      /* Ensure the overlay is hidden on large screens */
+      body::before {
+          display: none !important;
+      }
+
+      /* Hide the new mobile toggle button on desktop */
+      #mobileSidebarToggle {
+          display: none;
+      }
+
+      /* Hide the sidebar close button on desktop */
+      #sidebarCloseBtn {
+          display: none;
+      }
+}
+
+/* Text visibility and fade animation in sidebar */
+#sidebar .text-lg.font-medium,
+#sidebar h2 {
+    opacity: 1; /* Default opacity is 1 */
+    transition: opacity 0.3s ease-in 0.2s; /* Add a slight delay for fade on open */
+}
+
+#sidebar.open .text-lg.font-medium,
+#sidebar.open h2 {
+     opacity: 1; /* Ensure opacity is 1 when explicitly open (for mobile) */
+}
+
+/* Sidebar collapsed state adjustments */
+#sidebar.collapsed .text-lg.font-medium,
+#sidebar.collapsed h2 {
+    display: none;
+    opacity: 0; /* Ensure text is hidden and not just transparent when collapsed */
+}
+
+#sidebar.collapsed nav a {
+    justify-content: center; /* Center icons when collapsed */
+}
